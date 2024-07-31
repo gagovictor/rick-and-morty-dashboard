@@ -41,48 +41,58 @@ const HomePage = () => {
     <Box>
       <Box
         sx={{
-          backgroundImage: 'url(/path/to/rick-and-morty-background.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundColor: '#111111',
+          backgroundImage: 'url(/background.jpg)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'right center',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#252525',
           width: '100%',
           height: '25vh',
-          padding: '16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start'
         }}
       >
-        <Typography
-          variant="h1"
-          sx={{
-            color: '#fff',
-            fontSize: '2rem',
-            textAlign: 'left',
-            width: '100%'
-          }}
-        >
-          Rick and Morty Characters
-        </Typography>
+        <Container
+            sx={{
+              padding: '16px',
+              height: '25vh',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'flex-start'
+            }}
+          >
+          <Typography
+            variant="h1"
+            sx={{
+              color: '#fff',
+              fontSize: '2rem',
+              textAlign: 'left',
+              width: '100%'
+            }}
+          >
+            Rick and Morty Characters
+          </Typography>
+        </Container>
       </Box>
 
       <Toolbar
-        sx={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          padding: '16px',
-          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-          marginBottom: '32px',
-          backgroundColor: '#fff'
-        }}
-      >
-        <Box sx={{ flexGrow: 1 }}>
+          sx={{
+            width: '100%',
+            justifyContent: 'space-between',
+            padding: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+            marginBottom: '32px',
+            backgroundColor: '#fff'
+          }}
+        >
+        <Container
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
           <Search />
-        </Box>
-        <Box>
           <Pagination />
-        </Box>
+        </Container>
       </Toolbar>
 
       <Container>
@@ -91,18 +101,49 @@ const HomePage = () => {
             <Grid item xs={12} sm={6} md={4} lg={3} key={character.id}>
               <Paper
                 sx={{
-                  padding: '16px',
                   textAlign: 'center',
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'center',
+                  height: '100%',
+                  overflow: 'hidden'
                 }}
               >
-                <img src={character.image} alt={character.name} width="100%" />
+                <Box
+                  sx={{
+                    width: '100%',
+                    height: '200px',
+                    backgroundColor: '#e0e0e0',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    position: 'relative'
+                  }}
+                >
+                  <img
+                    src={character.image}
+                    alt={character.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    padding: '12px',
+                  }}
+                >
                 <Typography variant="h6">{character.name}</Typography>
                 <Typography variant="body2">
                   {character.status} - {character.species}
                 </Typography>
+                </Box>
               </Paper>
             </Grid>
           ))}
