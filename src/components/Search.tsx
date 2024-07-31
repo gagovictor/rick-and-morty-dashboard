@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCharacters } from '../redux/reducers';
 import { useQuery, gql } from '@apollo/client';
+import { TextField, Button, Box } from '@mui/material';
 
 const SEARCH_CHARACTERS = gql`
   query SearchCharacters($name: String!) {
@@ -36,15 +37,18 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div>
-      <input
-        type="text"
+    <Box display="flex" justifyContent="center" mt={2}>
+      <TextField
+        label="Search characters..."
+        variant="outlined"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search characters..."
+        style={{ marginRight: '10px' }}
       />
-      <button onClick={handleSearch}>Search</button>
-    </div>
+      <Button variant="contained" color="primary" onClick={handleSearch}>
+        Search
+      </Button>
+    </Box>
   );
 };
 

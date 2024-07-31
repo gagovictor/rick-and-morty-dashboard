@@ -4,6 +4,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setCharacters } from '../redux/reducers';
 import { useQuery, gql } from '@apollo/client';
+import { Button, Box } from '@mui/material';
 
 const GET_CHARACTERS = gql`
   query GetCharacters($page: Int!) {
@@ -40,20 +41,37 @@ const Pagination: React.FC = () => {
   const handleNext = () => {
     if (data?.characters.info.next) {
       setPage(page + 1);
+      refetch({ page: page + 1 });
     }
   };
 
   const handlePrev = () => {
     if (data?.characters.info.prev) {
       setPage(page - 1);
+      refetch({ page: page - 1 });
     }
   };
 
   return (
-    <div>
-      <button onClick={handlePrev} disabled={page === 1}>Previous</button>
-      <button onClick={handleNext} disabled={!data?.characters.info.next}>Next</button>
-    </div>
+    <Box display="flex" justifyContent="center" mt={2}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handlePrev}
+        disabled={page === 1}
+      >
+        Previous
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleNext}
+        disabled={!data?.characters.info.next}
+        style={{ marginLeft: '10px' }}
+      >
+        Next
+      </Button>
+    </Box>
   );
 };
 

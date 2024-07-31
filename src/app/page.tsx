@@ -48,7 +48,6 @@ const HomePage = () => {
             <p>{character.status} - {character.species}</p>
           </li>
         ))}
-      <Pagination />
       </ul>
     </div>
   );
