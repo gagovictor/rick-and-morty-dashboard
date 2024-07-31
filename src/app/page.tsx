@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCharacters } from '../redux/reducers';
-import styles from './page.module.css';
+import { Container, Grid, Typography, Box, Paper, Toolbar } from '@mui/material';
 import Search from '@/components/Search';
 import Pagination from '@/components/Pagination';
 
+// GraphQL query
 const GET_CHARACTERS = gql`
   query {
     characters(page: 1) {
@@ -33,23 +34,89 @@ const HomePage = () => {
     }
   }, [data, dispatch]);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography>Error: {error.message}</Typography>;
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title}>Rick and Morty Characters</h1>
-      <Search />
-      <ul className={styles.characterList}>
-        {characters.map((character: any) => (
-          <li key={character.id} className={styles.characterCard}>
-            <img src={character.image} alt={character.name} />
-            <h2>{character.name}</h2>
-            <p>{character.status} - {character.species}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Box>
+      <Box
+        sx={{
+          backgroundImage: 'url(/path/to/rick-and-morty-background.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundColor: '#111111',
+          width: '100%',
+          height: '25vh',
+          padding: '16px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start'
+        }}
+      >
+        <Typography
+          variant="h1"
+          sx={{
+            color: '#fff',
+            fontSize: '2rem',
+            textAlign: 'left',
+            width: '100%'
+          }}
+        >
+          Rick and Morty Characters
+        </Typography>
+      </Box>
+
+      <Toolbar
+        sx={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          padding: '16px',
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+          marginBottom: '32px',
+          backgroundColor: '#fff'
+        }}
+      >
+        <Box sx={{ flexGrow: 1 }}>
+          <Search />
+        </Box>
+        <Box>
+          <Pagination />
+        </Box>
+      </Toolbar>
+
+      <Container>
+        <Grid container spacing={2} sx={{ marginBottom: '32px' }}>
+          {characters.map((character: any) => (
+            <Grid item xs={12} sm={6} md={4} lg={3} key={character.id}>
+              <Paper
+                sx={{
+                  padding: '16px',
+                  textAlign: 'center',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <img src={character.image} alt={character.name} width="100%" />
+                <Typography variant="h6">{character.name}</Typography>
+                <Typography variant="body2">
+                  {character.status} - {character.species}
+                </Typography>
+              </Paper>
+            </Grid>
+          ))}
+        </Grid>
+
+        <Box
+          sx={{
+            marginBottom: '32px'
+          }}
+        >
+          <Pagination />
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
